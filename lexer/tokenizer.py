@@ -5,7 +5,7 @@ class Lexer():
         "*": "TIMES",
         "/": "DIVIDE",
         "(": "LPAREN",
-        ")":"RPAREN"
+        ")":"RPAREN",
     }
     state_map = {
         "DEFAULT"
@@ -36,13 +36,31 @@ class Lexer():
             Lexer.tokens.append(("NUMBER", Lexer.buffer))
             Lexer.resetBuffer()
             Lexer.resetState()
-            
+    
+    def readString(current):
+        if Lexer.state == "STRING":
+            Lexer.buffer += current
+            print("Buffer: " + Lexer.buffer)
+    
 
 
     def tokenize(font):
+        quote = ''
+        quoteList = ['"', "'"]
         for char in font:
-            if char == " " and Lexer.state == "NUMBER":
-                Lexer.tokens.append(("NUMBER", Lexer.buffer))
+            if Lexer.state == "STRING":
+                if char == quote:
+                    Lexer.tokens.append(("STRING", Lexer.buffer))
+                    Lexer.resetBuffer()
+                    Lexer.resetState()
+                    quote = ''
+                else:
+                    Lexer.readString(char)
+            elif char in quoteList:
+                Lexer.changeState("STRING")
+                quote = char
+            elif char == " " and Lexer.state != "DEFAULT":
+                Lexer.tokens.append((Lexer.state, Lexer.buffer))
                 Lexer.resetBuffer()
                 Lexer.resetState()
             elif char in Lexer.symbol_map:
@@ -50,7 +68,11 @@ class Lexer():
             elif char.isdigit():
                 Lexer.changeState("NUMBER")
                 Lexer.readNumber(char)
-
+            elif char in quoteList or Lexer.state == "STRING":
+                if char in quoteList:
+                    char = quote
+                Lexer.changeState("STRING")
+                Lexer.readString(char)
     
         return Lexer.tokens
     
@@ -58,4 +80,4 @@ class Lexer():
 
 
 if __name__ == "__main__":
-    print(Lexer.tokenize("3 + 69 + 9 - 8 * 65"))
+    print(Lexer.tokenize('3 + 69 + 9 - 8 * 65 + "aa++--//**aa" + 5 "teste MALUCO" + "olá, mundo"'))
