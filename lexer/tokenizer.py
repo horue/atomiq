@@ -1,7 +1,4 @@
 class Lexer():
-    state = "DEFAULT"
-    tokens = []
-
     symbol_map = {
         "+": "PLUS",
         "-": "MINUS",
@@ -16,31 +13,38 @@ class Lexer():
         "STRING"
     }
 
+    state = "DEFAULT"
+
     def changeState(arg):
         Lexer.state = arg
 
     def resetState():
         Lexer.state = "DEFAULT"
 
+
+    buffer = ''
+
+    def resetBuffer():
+        Lexer.buffer = ''
+
+    tokens = []
+
     def readNumber(current):
-        number = current
         if Lexer.state == "NUMBER":
-            number += current
+            Lexer.buffer += current
         else:
-            Lexer.tokens.append(("NUMBER", number))
+            Lexer.tokens.append(("NUMBER", Lexer.buffer))
+            Lexer.resetBuffer()
             Lexer.resetState()
+            
 
 
-        
-
-    
     def tokenize(font):
-        i = 0
-        context = font.split()
-        for i in range(len(context)):
-            char = context[i]
-            if char == " ":
-                Lexer.changeState("DEFAULT")
+        for char in font:
+            if char == " " and Lexer.state == "NUMBER":
+                Lexer.tokens.append(("NUMBER", Lexer.buffer))
+                Lexer.resetBuffer()
+                Lexer.resetState()
             elif char in Lexer.symbol_map:
                 Lexer.tokens.append((Lexer.symbol_map[char], char))
             elif char.isdigit():
@@ -54,4 +58,4 @@ class Lexer():
 
 
 if __name__ == "__main__":
-    print(Lexer.tokenize("3 + 6 + 9"))
+    print(Lexer.tokenize("3 + 69 + 9 - 8 * 65"))
