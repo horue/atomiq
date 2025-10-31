@@ -2,7 +2,7 @@ stringMatch = r""""[^"]*"|'[^']*'"""
 
 TOKENS = [
     ## Basic Types ##
-    
+
     ("NUMBER", r"\d+"),
     ("STRING", stringMatch),
     ("IDENT", r"[a-zA-Z_][a-zA-Z0-9_]*"),
@@ -21,7 +21,9 @@ TOKENS = [
 
     ("METHOD", r"\@method"),
     ("CLASS", r"\@[[:upper:]][^.\s]*"),
-    ("CLASS_CALLED", r"\.[[:lower:]]*")
+    ("CLASS_CALLED", r"\.[[:lower:]]*"),
+    ("AGRS", r':[^:]*:')
+
 ]
 
 if __name__ == '__main__':
