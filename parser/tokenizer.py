@@ -1,7 +1,7 @@
 from lark import *
 
 class AtomiqParser():
-    grammar = open(r'lexer\grammar.lark').read()
+    grammar = open(r'parser\grammar.lark').read()
     praser = Lark(grammar, parser='earley', propagate_positions=True)
 
     @staticmethod
