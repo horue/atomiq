@@ -6,7 +6,7 @@ class AtomiqParser():
 
     @staticmethod
     def build(code):
-        tree = Tree.praser.parse(code)
+        tree = AtomiqParser.praser.parse(code)
         return tree
 
 
