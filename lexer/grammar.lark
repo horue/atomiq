@@ -1,0 +1,45 @@
+%import common.WS_INLINE
+%import common.NEWLINE
+%ignore WS_INLINE
+%ignore NEWLINE
+
+
+_LBRA: "{"
+_RBRA: "}"
+COLON: ":"
+ASSIGN: "="
+
+IDENT: /[a-zA-Z_][a-zA-Z0-9_]*/
+
+PLUS: "+"
+MINUS: "-"
+TIMES: "*"
+DIVIDE: "/"
+
+INT: /\d+/
+FLOAT: /\d+\.\d+/
+ESCAPED_STRING: /"([^"\\]|\\.)*"/ | /'([^'\\]|\\.)*'/
+RETURN: "return"
+NONE_VAL: "none"
+
+
+start: statement+
+declaration_statement: type IDENT ASSIGN expression
+statement: method | function_call | declaration_statement | return_statement
+return_statement: RETURN expression?
+
+
+
+method: "@method" IDENT COLON args COLON type _LBRA statement* _RBRA
+class: "@class" IDENT _LBRA method* _RBRA
+function_call: "@" IDENT "." IDENT COLON args? COLON
+args: (expression ("," expression)*)?
+expression: value (PLUS|MINUS|TIMES|DIVIDE value)*
+
+
+
+value: INT | FLOAT | ESCAPED_STRING | IDENT | NONE_VAL
+block: _LBRA statement* _RBRA
+type: "none" | "int" | "float" | "string" | "bool"
+
+
