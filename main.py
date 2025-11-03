@@ -2,6 +2,7 @@ from parser.tokenizer import AtomiqParser
 from interpreter.interpreter import AtomiqInterpreter
 import time
 import os
+import sys
 
 
 
@@ -22,7 +23,7 @@ def runAtCode(path: str):
     endTime = time.perf_counter()
     totalTime = endTime - startTime
     print(f'\nExecuted in: {totalTime:.2f} seconds.')
-    
+
     return
 
 
@@ -32,4 +33,6 @@ def runAtCode(path: str):
 
 
 if __name__ == "__main__":
+    codePath = sys.argv[1]
+    runAtCode(codePath)
 
