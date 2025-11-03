@@ -22,7 +22,6 @@ class AtomiqInterpreter(Transformer):
             return items[0]
 
     def function_call(self, items):
-            print(items)
             class_name = items[0].value
             method_name = items[1].value
             args = items[3]
