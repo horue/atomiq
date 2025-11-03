@@ -13,5 +13,8 @@ class AtomiqParser():
 
 if __name__ == "__main__":
     code = open(r'examples\exemplo2.at').read()
-    print(AtomiqParser.build(code))
+    tree = AtomiqParser.build(code)
+    transformer = Transformer()
+    print(tree)
+
 
