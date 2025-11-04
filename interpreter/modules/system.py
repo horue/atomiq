@@ -12,8 +12,13 @@ class System():
         return username
     
     @staticmethod
-    def saveUsername(fileName, mode):
+    def saveUsername(fileName, mode="w", message=""):
         username = System.getUsername().capitalize()
-        f = open(fileName, mode)
-        f.write(username)
+        try:
+            f = open(fileName, mode)
+            f.write(username)
+            if message == "True": 
+                print(f"File saved at {fileName}.")
+        except Exception as e:
+            print(f"Error when executing: {e}")
 
