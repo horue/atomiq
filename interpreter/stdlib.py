@@ -6,6 +6,7 @@ from interpreter.modules.ollama import *
 STD = {
     "User": {
         "show": User.show,
+        "showSl": User.showSl,
         "clear": User.clear
     },
     "System":{
