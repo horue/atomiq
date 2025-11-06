@@ -12,5 +12,9 @@ class User():
             print(args[0])
 
     @staticmethod
+    def showSl(*args):
+        print(args[0], end=" ")
+
+    @staticmethod
     def clear():
         os.system('cls')
