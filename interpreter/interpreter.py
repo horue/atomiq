@@ -39,19 +39,22 @@ class AtomiqInterpreter(Transformer):
             return items[0]
 
     def function_call(self, items):
+            resolvedArgs = []
+
             class_name = items[0].value
             method_name = items[1].value
             args = items[3]
 
-            if args[0] in self.scope:
-                resolved = Utils.resulveValue(self.scope[args[0]])
-            else:
-                resolved = Utils.resulveValue(args[0])
+            for arg in args:
+                if arg in self.scope:
+                    resolvedArgs.append(Utils.resulveValue(self.scope[arg]))
+                else:
+                    resolvedArgs.append(Utils.resulveValue(arg))
 
 
             metodo = self.native_classes[class_name][method_name] 
 
-            return metodo(resolved)
+            return metodo(*resolvedArgs)
 
     def value(self, items):
             item = items[0]
