@@ -25,7 +25,7 @@ NONE_VAL: "none"
 
 start: statement+
 declaration_statement: type IDENT ASSIGN expression
-statement: method | function_call | declaration_statement | return_statement
+statement: method | function_call | declaration_statement | return_statement | function_call
 return_statement: RETURN expression?
 
 
@@ -38,7 +38,7 @@ expression: value (PLUS|MINUS|TIMES|DIVIDE value)*
 
 
 
-value: INT | FLOAT | ESCAPED_STRING | IDENT | NONE_VAL
+value: INT | FLOAT | ESCAPED_STRING | IDENT | NONE_VAL | method
 block: _LBRA statement* _RBRA
 type: "none" | "int" | "float" | "string" | "bool"
 
